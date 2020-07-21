@@ -2,7 +2,10 @@ import { Router } from 'express';
 import { getCustomRepository } from 'typeorm';
 
 import BooksRepository from '../repositories/BooksRepository';
-import CreateBookService from '../services/CreateBookService';
+import IndexBookService from '../services/Book/IndexBookService';
+import CreateBookService from '../services/Book/CreateBookService';
+import UpdateBookService from '../services/Book/UpdateBookService';
+import DeleteBookService from '../services/Book/DeleteBookService';
 
 const booksRouter = Router();
 
@@ -14,35 +17,50 @@ booksRouter.get('/', async (request, response) => {
   return response.json(books);
 });
 
-booksRouter.get('/:id', (request, response) => {
-  return response.json({ message: 'GET - books'});
+booksRouter.get('/:id', async (request, response) => {
+  const { id } = request.params;
+
+  const indexBook = new IndexBookService();
+
+  const book = await indexBook.execute(id);
+
+  return response.json(book);
 });
 
 booksRouter.post('/', async (request, response) => {
-  try {
-    const { name, description, author, price } = request.body;
+  const { name, description, author, price } = request.body;
 
-    const createBook = new CreateBookService();
+  const createBook = new CreateBookService();
 
-    const book = await createBook.execute({
-      name,
-      description,
-      author,
-      price,
-    });
+  const book = await createBook.execute({
+    name,
+    description,
+    author,
+    price,
+  });
 
-    return response.json(book);
-  } catch (err) {
-    return response.status(400).json({ error: err.message });
-  }
+  return response.json(book);
 });
 
-booksRouter.put('/:id', (request, response) => {
-  return response.json({ message: 'PUT - books'});
+booksRouter.put('/:id', async (request, response) => {
+  const { id } = request.params;
+  const { name, description, author, price } = request.body;
+
+  const updateBook = new UpdateBookService();
+
+  const book = await updateBook.execute({ id, name, description, author, price });
+
+  return response.json(book);
 });
 
-booksRouter.delete('/:id', (request, response) => {
-  return response.json({ message: 'DELETE - books'});
+booksRouter.delete('/:id', async (request, response) => {
+  const { id } = request.params;
+
+  const deleteBook = new DeleteBookService();
+
+  const book = await deleteBook.execute(id);
+
+  return response.json(book);
 });
 
 export default booksRouter;

@@ -18,6 +18,7 @@ $ yarn eslint --init
 $ yarn add uuidv4
 $ yarn add -D @types/uuidv4
 $ yarn add typeorm pg
+$ yarn add express-async-errors
 ```
 
 > install dependency

@@ -1,7 +1,7 @@
 import { getCustomRepository } from 'typeorm';
 
-import Book from '../models/Book';
-import BooksRepository from '../repositories/BooksRepository';
+import Book from '../../models/Book';
+import BooksRepository from '../../repositories/BooksRepository';
 
 interface Request {
   name: string;
