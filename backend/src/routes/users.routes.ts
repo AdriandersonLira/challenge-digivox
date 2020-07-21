@@ -1,25 +1,23 @@
 import { Router } from 'express';
 
+import CreateUserService from '../services/User/CreateUserService';
+
 const usersRouter = Router();
 
-usersRouter.get('/', (request, response) => {
-  return response.json({ message: 'GET - users' });
-});
+usersRouter.post('/', async (request, response) => {
+  const { name, email, password } = request.body;
 
-usersRouter.get('/', (request, response) => {
-  return response.json({ message: 'GET - users' });
-});
+  const createUser = new CreateUserService();
 
-usersRouter.post('/', (request, response) => {
-  return response.json({ message: 'POST - users' });
-});
+  const user = await createUser.execute({
+    name,
+    email,
+    password
+  });
 
-usersRouter.put('/', (request, response) => {
-  return response.json({ message: 'PUT - users' });
-});
+  delete user.password;
 
-usersRouter.delete('/', (request, response) => {
-  return response.json({ message: 'DELETE - users' });
+  return response.json(user);
 });
 
 export default usersRouter;

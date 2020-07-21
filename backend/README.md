@@ -16,9 +16,10 @@ $ yarn eslint --init
 ```
 ```bash
 $ yarn add uuidv4
-$ yarn add -D @types/uuidv4
 $ yarn add typeorm pg
 $ yarn add express-async-errors
+$ yarn add bcryptjs
+$ yarn add -D @types/uuidv4 @types/bcryptjs
 ```
 
 > install dependency

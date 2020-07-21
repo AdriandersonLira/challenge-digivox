@@ -29,7 +29,6 @@ export default class CreateBooks1595281066440 implements MigrationInterface {
               name: 'price',
               type: 'money',
             },
-
             {
               name: 'created_at',
               type: 'timestamp',
